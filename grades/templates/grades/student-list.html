@@ -1,0 +1,17 @@
+{% extends "grades/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+<h1>Students:</h1>
+{% if is_super %}
+    <ul>
+        {% for student in students %}
+            <li class="list-group-item list-group-item-action"><a href="{% url 'individual' student.id %}">{{ student.last_name }}, {{ student.first_name }}</a></li>
+        {% empty %}
+            <li class="list-group-item list-group-item-action">No Courses.</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "grades/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+{% if is_super %}
+    {% if message %}
+        <div class="alert alert-primary" role="alert">{{ message }}</div>
+        <br>
+    {% endif %}
+
+<form action="{% url 'create_course' %}" method="post">
+    {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="course" placeholder="Course Name">
+        </div>
+        <select class="form-control" name="teacher" id="">
+            {% for teacher in teachers %}
+                <option value="{{ teacher.id }}">{{ teacher }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <input class="btn btn-primary form-control" type="submit" value="Create Course">
+
+</form>
+
+{% else %}
+<h2>Unauthorized!</h2>
+{% endif %}
+</div>
+{% endblock %}

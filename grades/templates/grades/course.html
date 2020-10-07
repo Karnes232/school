@@ -1,0 +1,52 @@
+{% extends "grades/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+    <h3>Subject: {{ course.subject }}</h3>
+    <h5>Teacher: {{ course.teacher }}</h5>
+    <form action="{% url 'course_report' %}" method="post">
+        {% csrf_token %}
+    <button name="course_id" value="{{ course.id }}" class="btn btn-primary btn-sm">All Student's Marks</button>
+    </form>
+
+
+    <h6 class="title">Students:</h6>
+    
+        {% for student in students %}
+        <table class="table table-sm table-striped">
+            <thead>
+                <th>Name</th>
+                <th>Average</th>
+            </thead>
+            <tbody>
+                <td><a href="{% url 'student' student.student_id %}">{{ student.student }}</a></td>
+                <td>{{ student.grand }}</td>
+                {% if is_teacher %} 
+                <form action="{% url 'student' student.student_id %}" method="post">
+                    {% csrf_token %}
+                <td><button name="id" value="{{ student.id }}" class="btn btn-primary btn-sm">Edit</button></td>
+                </form>
+                {% endif %}
+            </tbody>
+        </table>
+        {% empty %}
+            <li class="list-group-item list-group-item-action">No Students.</li>
+        {% endfor %}
+
+    {% if is_super or is_teacher %}
+    <h6>Non Students:</h6>
+    <form action="{% url 'course' course.id %}" method="post">
+        {% csrf_token %}
+        <select class="form-control" name="student" id="">
+            {% for ns in non_students %}
+                <option value="{{ ns.id }}">{{ ns }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input class="btn btn-primary" type="submit">
+    </form>
+    {% endif %}
+
+
+</div>
+{% endblock %}

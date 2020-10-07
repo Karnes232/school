@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}School{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'grades/styles.css' %}">
+        {% block link %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between">
+            <a class="navbar-brand" href="{% url 'index' %}">School</a>         
+            <div>
+              <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <strong>{{ user.username }}</strong>
+                    </li>
+                {% endif %}  
+              </ul>
+            </div> 
+            <div>             
+                {% if user.is_authenticated %} 
+                    <li class="nav-item dropdown" style="list-style: none;">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Links</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'index' %}">Home</a>
+                            {% if is_super or is_teacher %}    
+                            <a class="dropdown-item" href="{% url 'courses' %}">Courses</a>
+                            {% endif %}
+                            {% if is_super %}
+                            <a class="dropdown-item" href="{% url 'report_all' %}">Student Reports</a>
+                            {% endif %}
+                            {% if is_student %}
+                            <a class="dropdown-item" href="{% url 'report' %}">Student Reports</a>
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            {% if is_super %}
+                            <a class="dropdown-item" href="{% url 'create_course' %}">Create Course</a>
+                            <a class="dropdown-item" href="{% url 'register' %}">New Teacher / Student</a>
+                            <div class="dropdown-divider"></div>
+                            {% endif %}
+                            <a class="dropdown-item" href="{% url 'password' %}">Change Password</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>                         
+                        </div>
+                      </li> 
+                {% endif %}
+              </ul>
+            </div>
+        </nav>   
+    </div>    
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+            {% block script %}
+            {% endblock %}
+        </div>
+
+        <script src="{% static 'grades/script.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+    </body>
+</html>

@@ -1,0 +1,25 @@
+{% extends "grades/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+<h1>Courses:</h1>
+{% if is_super %}
+    <ul>
+        {% for course in courses %}
+            <li class="list-group-item list-group-item-action"><a href="{% url 'course' course.id %}">Course {{ course.id }}: {{ course.subject }} - {{ course.teacher }}</a></li>
+        {% empty %}
+            <li class="list-group-item list-group-item-action">No Courses.</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% if is_teacher %}
+    <ul>
+        {% for course in user_courses %}
+            <li class="list-group-item list-group-item-action"><a href="{% url 'course' course.id %}">Course {{ course.id }}: {{ course.subject }} - {{ course.teacher }}</a></li>
+        {% empty %}
+            <li class="list-group-item list-group-item-action">No Courses.</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
+{% endblock %}

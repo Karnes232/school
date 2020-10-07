@@ -1,0 +1,10 @@
+1. Allow students/teacher to change password *
+2. super user to create courses *
+3. super user to add students to courses *
+4. Teachers to add grades to each student in course *
+5. add up grades and show average *
+6. Teachers should be able to see all students grades *
+7. Students can look up their grades in all courses *
+8. Super user can look up students grades by student
+or by course
+

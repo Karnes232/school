@@ -1,0 +1,66 @@
+{% extends "grades/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <form action="{% url 'grades' %}" method="post">
+        {% csrf_token %}
+    
+    <table class="table table-sm table-striped">
+        <thead>
+            <th>Course</th>
+            <th>T1-P1</th>
+            <th>T1-P2</th>
+            <th>T1-P3</th>
+            <th>Avg-T1</th>
+            <th>T2-P1</th>
+            <th>T2-P2</th>
+            <th>T2-P3</th>
+            <th>Avg-T2</th>
+            <th>T3-P1</th>
+            <th>T3-P2</th>
+            <th>T3-P3</th>
+            <th>Avg-T3</th>
+        </thead>
+        <tbody>
+            {%for grade in grades %}
+            <h4>Student: {{ grade.student }}</h4> 
+        <tr>
+            <td>{{ grade.course}}</td>
+            <td><input name="t1_p1" type="number" value="{{ grade.t1_p1 }}"></td>
+            <td><input name="t1_p2" type="number" value="{{ grade.t1_p2 }}"></td>
+            <td><input name="t1_p3" type="number" value="{{ grade.t1_p3 }}"></td>
+            {% if grade.avg1 != 0 %}
+            <td>{{ grade.avg1 }}</td>
+            {% else %}
+            <td>0</td>
+            {% endif %}
+            <td><input name="t2_p1" type="number" value="{{ grade.t2_p1 }}"></td>
+            <td><input name="t2_p2" type="number" value="{{ grade.t2_p2 }}"></td>
+            <td><input name="t2_p3" type="number" value="{{ grade.t2_p3 }}"></td>
+            {% if grade.avg2 != 0 %}
+            <td>{{ grade.avg2 }}</td>
+            {% else %}
+            <td>0</td>
+            {% endif %}
+            <td><input name="t3_p1" type="number" value="{{ grade.t3_p1 }}"></td>
+            <td><input name="t3_p2" type="number" value="{{ grade.t3_p2 }}"></td>
+            <td><input name="t3_p3" type="number" value="{{ grade.t3_p3 }}"></td>
+            {% if grade.avg3 != 0 %}
+            <td>{{ grade.avg3 }}</td>
+            {% else %}
+            <td>0</td>
+            {% endif %}
+        </tr>
+    
+    </tbody>
+</table>
+
+<input name="student" value="{{ grade.student_id }}" style="display: none;">
+<button name="grade_id" value="{{ grade.id }}" class="btn btn-primary btn-sm">Submit</button>
+</form>
+{% endfor %}
+</div>
+
+
+{% endblock %}

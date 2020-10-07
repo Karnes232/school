@@ -1,0 +1,107 @@
+{% extends "grades/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+    <div>
+    <h3><strong>{{ course }}</strong></h3>
+    <form action="{% url 'export_users_xls' %}" method="post">
+        {% csrf_token %}
+    <button name="course_id" value="{{ course.id }}" class="btn btn-primary btn-sm">Export SpreadSheet</button>
+    </form>
+    
+    </div>
+    <table class="table table-sm table-striped">
+        <thead>
+            <th>Student</th>
+            <th>T1-P1</th>
+            <th>T1-P2</th>
+            <th>T1-P3</th>
+            <th>Avg-T1</th>
+            <th>T2-P1</th>
+            <th>T2-P2</th>
+            <th>T2-P3</th>
+            <th>Avg-T2</th>
+            <th>T3-P1</th>
+            <th>T3-P2</th>
+            <th>T3-P3</th>
+            <th>Avg-T3</th>
+            <th>AVG</th>
+        </thead>
+        <tbody>
+            {%for grade in grades %}
+        <tr>
+            <td>{{ grade.student}}</td>
+            {% if grade.t1_p1 != 0 %}
+            <td>{{ grade.t1_p1 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.t1_p2 != 0 %}
+            <td>{{ grade.t1_p2 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.t1_p3 != 0 %}
+            <td>{{ grade.t1_p3 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.avg1 != 0 %}
+            <td>{{ grade.avg1 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.t2_p1 != 0 %}
+            <td>{{ grade.t2_p1 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.t2_p2 != 0 %}
+            <td>{{ grade.t2_p2 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.t2_p3 != 0 %}
+            <td>{{ grade.t2_p3 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.avg2 != 0 %}
+            <td>{{ grade.avg2 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.t3_p1 != 0 %}
+            <td>{{ grade.t3_p1 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.t3_p2 != 0 %}
+            <td>{{ grade.t3_p2 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.t3_p3 != 0 %}
+            <td>{{ grade.t3_p3 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.avg3 != 0 %}
+            <td>{{ grade.avg3 }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            {% if grade.grand != 0 %}
+            <td>{{ grade.grand }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+
+{% endblock %}
